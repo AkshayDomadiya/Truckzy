@@ -6,7 +6,9 @@ import BottomSheet from "../components/BottomSheet";
 import TruckIcon from "../components/TruckIcon";
 import AppButton from "../components/AppButton";
 import { useNavigation } from "@react-navigation/native";
-// import { MapView, Marker } from "expo-maps"; // TODO: Re-enable for dev build
+import MapView, { Marker } from "react-native-maps";
+import { MotiView } from "moti";
+import AnimatedTruckIcon from "../components/AnimatedTruckIcon";
 
 const dummyTrucks = [
   { id: 1, lat: 37.78825, lng: -122.4324 },
@@ -17,6 +19,7 @@ const dummyTrucks = [
 export default function HomeScreen() {
   const navigation = useNavigation();
   const [sheetVisible, setSheetVisible] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { width } = useWindowDimensions();
   const isLarge = width > 400;
   const fabRight = isLarge ? 32 : 16;
@@ -27,31 +30,34 @@ export default function HomeScreen() {
     <View style={styles.screen}>
       <AppHeader title="Truckzy" />
       <View style={styles.container}>
-        {/*
         <MapView
-        style={{ flex: 1 }}
-        initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        }}
-      >
-        {dummyTrucks.map(truck => (
-          <Marker
-            key={truck.id}
-            coordinate={{ latitude: truck.lat, longitude: truck.lng }}
-          >
-            <TruckIcon />
-          </Marker>
-        ))}
-      </MapView>
-      */}
-        <View style={styles.mapPlaceholder}>
-          <Ionicons name="map-outline" size={80} color="#cbd5e1" />
-          <Text style={styles.mapPlaceholderText}>Map preview is disabled in Expo Go</Text>
-          <Text style={styles.mapPlaceholderSubtext}>(Enable in dev build)</Text>
-        </View>
+          style={{ flex: 1 }}
+          initialRegion={{
+            latitude: 37.78825,
+            longitude: -122.4324,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          }}
+        >
+          {dummyTrucks.map((truck, index) => (
+            <Marker
+              key={truck.id}
+              coordinate={{ latitude: truck.lat, longitude: truck.lng }}
+            >
+              <AnimatedTruckIcon delay={index * 100} />
+            </Marker>
+          ))}
+        </MapView>
+        {loading && (
+          <View style={styles.loadingOverlay}>
+            <LottieView
+              source={require("../assets/animations/loading.json")}
+              autoPlay
+              loop
+              style={{ width: 100, height: 100 }}
+            />
+          </View>
+        )}
         <TouchableOpacity
           style={[styles.fab, { right: fabRight, bottom: fabBottom }]}
           onPress={() => navigation.navigate("BookingFlow")}
@@ -92,6 +98,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#f1f5f9',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  loadingOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    justifyContent: "center",
+    alignItems: "center",
   },
   mapPlaceholderText: {
     fontSize: 18,

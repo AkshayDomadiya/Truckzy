@@ -6,6 +6,7 @@ import AnimatedInput from "../components/AnimatedInput";
 import { MotiView } from "moti";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import LottieView from "lottie-react-native";
 
 const steps = [
   { key: "pickup", label: "Pickup Location", icon: "location-outline" },
@@ -251,7 +252,12 @@ export default function BookingFlowScreen() {
           )}
           {step === 4 && (
             <View style={styles.confirmWrap}>
-              <Ionicons name="checkmark-circle" size={isLarge ? 64 : 44} color="#38b2ac" />
+              <LottieView
+                source={require("../assets/animations/success.json")}
+                autoPlay
+                loop={false}
+                style={{ width: isLarge ? 120 : 100, height: isLarge ? 120 : 100 }}
+              />
               <Text style={styles.confirmText}>Booking Confirmed!</Text>
               <Text style={styles.confirmSubtext}>Your truck is on the way. Thank you for choosing Truckzy!</Text>
             </View>
