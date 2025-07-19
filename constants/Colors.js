@@ -1,0 +1,20 @@
+export default {
+  primary: "#1e90ff",
+  primaryLight: "#87cefa",
+  primaryDark: "#1c7ed6",
+  secondary: "#ff6347",
+  secondaryLight: "#ffa07a",
+  secondaryDark: "#e5533d",
+  text: "#333",
+  textLight: "#666",
+  textLighter: "#999",
+  background: "#fff",
+  backgroundDark: "#f5f5f5",
+  border: "#eee",
+  success: "#28a745",
+  error: "#dc3545",
+  warning: "#ffc107",
+  white: "#fff",
+  black: "#000",
+  // Add other colors here
+};

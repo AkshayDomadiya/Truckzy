@@ -1,27 +1,28 @@
 import React, { useRef, useState } from "react";
-import { View, Text, Image, FlatList, Dimensions, StyleSheet, useWindowDimensions } from "react-native";
+import { View, Text, FlatList, Dimensions, StyleSheet, useWindowDimensions } from "react-native";
 import AppButton from "../components/AppButton";
 import { useNavigation } from "@react-navigation/native";
 import { MotiView } from "moti";
+import LottieView from "lottie-react-native";
 
 const slides = [
   {
     key: "1",
     title: "Book Trucks Instantly",
     desc: "Get a truck at your doorstep in minutes. Fast, reliable, and easy.",
-    image: require("../assets/illustrations/onboard1.png"),
+    animation: require("../assets/animations/onboard1.json"),
   },
   {
     key: "2",
     title: "Track Your Ride",
     desc: "Live tracking, transparent pricing, and trusted drivers.",
-    image: require("../assets/illustrations/onboard2.png"),
+    animation: require("../assets/animations/onboard2.json"),
   },
   {
     key: "3",
     title: "Move Anything, Anytime",
     desc: "From furniture to freight, Truckzy moves it all for you.",
-    image: require("../assets/illustrations/onboard3.png"),
+    animation: require("../assets/animations/onboard3.json"),
   },
 ];
 
@@ -62,7 +63,12 @@ export default function OnboardingScreen() {
               transition={{ type: "timing", duration: 600 }}
               style={styles.illustrationWrap}
             >
-              <Image source={item.image} style={{ width: imageSize, height: imageSize, resizeMode: 'contain' }} />
+              <LottieView
+                source={item.animation}
+                autoPlay
+                loop
+                style={{ width: imageSize, height: imageSize }}
+              />
             </MotiView>
             <Text style={[styles.slideTitle, { fontSize: isLarge ? 26 : 20 }]}>{item.title}</Text>
             <Text style={[styles.slideDesc, { fontSize: isLarge ? 16 : 14 }]}>{item.desc}</Text>
